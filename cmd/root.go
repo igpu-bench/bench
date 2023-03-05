@@ -12,6 +12,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+const Version string = "0.0.2"
+
 var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
@@ -35,6 +37,7 @@ across different iGPUs.`,
 			}
 		}
 	},
+	Version: Version,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
