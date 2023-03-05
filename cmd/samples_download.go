@@ -15,8 +15,8 @@ import (
 // downloadCmd represents the download command
 var downloadCmd = &cobra.Command{
 	Use:   "download [version]",
-	Short: "downloads the latest (or specific) sample bundle",
-	Long: "downloads a sample bundle for the latest (or a specific version if passed).\n" +
+	Short: "Downloads the latest (or specific) sample bundle",
+	Long: "Downloads a sample bundle for the latest (or a specific version if passed).\n" +
 		"If `--http` is passed, will attempt to use HTTP to download instead of the default bittorrent." +
 		"version is semver string (can be prepended by `v`).",
 	Args: cobra.MaximumNArgs(1),
@@ -32,7 +32,7 @@ var downloadCmd = &cobra.Command{
 			}
 		}
 
-		if viper.GetBool("http_download") {
+		if viper.GetBool("download.use_http") {
 			err = httpDownload(ver)
 		} else {
 			err = torrentDownload(ver)
@@ -51,16 +51,11 @@ func httpDownload(ver string) error {
 }
 
 func init() {
-	rootCmd.AddCommand(downloadCmd)
+	samplesCmd.AddCommand(downloadCmd)
 
-	// Here you will define your flags and configuration settings.
+	downloadCmd.PersistentFlags().StringP("info_repo", "i", "https://github.com/igpu-bench/samples_info", "The repo used to find sample bundle manifests, torrents, and HTTP sources")
+	viper.BindPFlag("download.info_repo", downloadCmd.Flags().Lookup("info_repo"))
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// downloadCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
 	downloadCmd.Flags().Bool("http", false, "switch from the default BitTorrent sample source to an HTTP source")
-	viper.BindPFlag("http_download", downloadCmd.Flags().Lookup("http"))
+	viper.BindPFlag("download.use_http", downloadCmd.Flags().Lookup("http"))
 }
