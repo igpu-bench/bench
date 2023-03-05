@@ -15,6 +15,7 @@ var removeCmd = &cobra.Command{
 	Short: "Remove files from the active list of sample files",
 	Long: `Removes the given file (or all files in the directory) from the list of
 files to use for transcode testing`,
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("remove called")
 	},

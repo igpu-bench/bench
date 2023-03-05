@@ -21,8 +21,6 @@ var downloadCmd = &cobra.Command{
 		"version is semver string (can be prepended by `v`).",
 	Args: cobra.MaximumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		var err error = nil
-
 		var ver string
 
 		if len(args) == 1 {
@@ -32,17 +30,22 @@ var downloadCmd = &cobra.Command{
 			}
 		}
 
-		if viper.GetBool("download.use_http") {
-			err = httpDownload(ver)
-		} else {
-			err = torrentDownload(ver)
-		}
-		return err
+		// call the correct downloader based on which method is requested
+		return (download_factory())(ver)
 	},
+}
+
+func download_factory() func(string) error {
+	if viper.GetBool("download.use_http") {
+		return httpDownload
+	} else {
+		return torrentDownload
+	}
 }
 
 func torrentDownload(ver string) error {
 	fmt.Println("in torrentDownloader with version " + ver)
+
 	return nil
 }
 

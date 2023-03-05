@@ -7,6 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var ActiveFiles []string
+
 // samplesCmd represents the samples command
 var samplesCmd = &cobra.Command{
 	Use:   "samples",
@@ -16,4 +18,10 @@ var samplesCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(samplesCmd)
+
+}
+
+func generate_active_files_from_sample_dir() error {
+
+	return nil
 }

@@ -15,6 +15,7 @@ var addCmd = &cobra.Command{
 	Short: "Adds files to the active list of sample files",
 	Long: `Adds the given file (or all files in the directory) to the list of
 files to use for transcode testing`,
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("add called")
 	},
