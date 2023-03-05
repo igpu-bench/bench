@@ -1,4 +1,4 @@
-module ibench
+module github.com/igpu-bench/ibench
 
 go 1.19
 
