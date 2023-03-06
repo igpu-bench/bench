@@ -8,6 +8,7 @@ import (
 type Job struct {
 	id     uuid.UUID
 	result result.Result
+	state  JobState
 }
 
 func New() *Job {
