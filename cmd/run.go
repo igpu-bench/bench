@@ -27,7 +27,7 @@ func do_run(cmd *cobra.Command, args []string) error {
 	fmt.Println("TODO do_run")
 
 	if !no_download {
-		err = download_factory()("")
+		err = downloadFactory()("")
 	}
 	return err
 }

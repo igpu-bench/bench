@@ -24,13 +24,17 @@ func IsExactVersionMatch(targetVer string, testVer string) bool {
 
 // returns true if the two versions are valid and are equal within the given precision (tilde comparison)
 func IsVersionMatch(targetVer string, testVer string) bool {
-	v, _ := semver.NewVersion(targetVer)
+	v, _ := semver.NewVersion(testVer)
 	c, _ := semver.NewConstraint("~ " + normalizeNoV(targetVer))
 
 	return c.Check(v)
 }
 
 func normalizeNoV(ver string) string {
-	re, _ := regexp.Compile("^v?(.*)$")
-	return re.FindString(ver)
+	match := regexp.MustCompile("^v?(.*)$").FindStringSubmatch(ver)
+	if len(match) > 1 {
+		return match[1]
+	} else {
+		return ""
+	}
 }
